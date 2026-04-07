@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tecno-Mec Academy · Anderson Uceta</title>
+  <meta name="description" content="Tecno-Mec Academy — educational robotics and technology academy founded by Anderson Uceta in the Dominican Republic.">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .back-link { display: inline-flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-muted); text-decoration: none; margin-bottom: 2rem; transition: color 0.15s; }
+    .back-link:hover { color: var(--blue); }
+
+    .academy-header {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 2rem;
+      align-items: center;
+      margin-bottom: 3rem;
+      padding-bottom: 2rem;
+      border-bottom: 0.5px solid var(--border);
+    }
+
+    .academy-logo {
+      width: 100px;
+      height: 100px;
+      border-radius: 16px;
+      object-fit: cover;
+      border: 0.5px solid var(--border);
+    }
+
+    .academy-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--blue); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
+    .academy-title { font-family: 'JetBrains Mono', monospace; font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 500; color: var(--text); letter-spacing: -0.5px; margin-bottom: 6px; }
+    .academy-slogan { font-size: 13px; color: var(--blue); font-style: italic; margin-bottom: 10px; }
+    .academy-meta { font-size: 13px; color: var(--text-muted); }
+
+    .gallery-masonry {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 3rem;
+    }
+
+    .gallery-masonry img {
+      width: 100%;
+      border-radius: 8px;
+      border: 0.5px solid var(--border);
+      object-fit: cover;
+      aspect-ratio: 1/1;
+      display: block;
+      transition: border-color 0.2s;
+    }
+
+    .gallery-masonry img:first-child {
+      grid-column: span 2;
+      aspect-ratio: 2/1;
+    }
+
+    .gallery-masonry img:hover { border-color: var(--blue); }
+
+    .content-grid { display: grid; grid-template-columns: 1fr 280px; gap: 3rem; align-items: start; }
+
+    .prose h2 { font-family: 'JetBrains Mono', monospace; font-size: 1rem; color: var(--text); font-weight: 500; margin: 2rem 0 0.8rem; }
+    .prose h2:first-child { margin-top: 0; }
+    .prose p { font-size: 14px; color: var(--text-muted); line-height: 1.85; margin-bottom: 1rem; }
+    .prose ul { list-style: none; padding: 0; margin-bottom: 1rem; }
+    .prose ul li { font-size: 14px; color: var(--text-muted); line-height: 1.8; padding-left: 1rem; position: relative; margin-bottom: 4px; }
+    .prose ul li::before { content: '//'; position: absolute; left: 0; color: var(--text-dim); font-family: 'JetBrains Mono', monospace; font-size: 10px; top: 4px; }
+
+    .sidebar { position: sticky; top: calc(var(--nav-h) + 2rem); }
+    .sidebar-card { background: var(--bg-card); border: 0.5px solid var(--border); border-radius: 8px; padding: 1.2rem; margin-bottom: 12px; }
+    .sidebar-title { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--blue); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 10px; }
+    .stack { display: flex; flex-wrap: wrap; gap: 5px; }
+    .stag { background: #0a0a18; border-radius: 2px; padding: 3px 8px; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-dim); border: 0.5px solid #1a1a30; }
+
+    .social-link { display: flex; align-items: center; gap: 10px; background: var(--bg-card); border: 0.5px solid var(--border); border-radius: 8px; padding: 0.9rem 1.1rem; text-decoration: none; transition: border-color 0.2s; margin-bottom: 8px; }
+    .social-link:hover { border-color: var(--blue); }
+    .social-icon { width: 32px; height: 32px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500; flex-shrink: 0; }
+    .si-ig { background: #2a0a2a; border: 0.5px solid #5a1a5a; color: #cc44cc; }
+    .si-yt { background: #2a0a0a; border: 0.5px solid #5a1a1a; color: #ff4444; }
+    .social-body .sl-label { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--text-dim); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 2px; }
+    .social-body .sl-handle { font-size: 12px; color: var(--text-muted); }
+
+    .stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 12px; }
+    .stat-mini { background: var(--bg-card); border: 0.5px solid var(--border); border-radius: 6px; padding: 0.8rem; text-align: center; }
+    .stat-mini .sn { font-family: 'JetBrains Mono', monospace; font-size: 1.3rem; font-weight: 500; color: var(--blue); line-height: 1; margin-bottom: 4px; }
+    .stat-mini .sl { font-size: 9px; color: var(--text-dim); letter-spacing: 0.5px; text-transform: uppercase; }
+
+    @media (max-width: 768px) {
+      .academy-header { grid-template-columns: 1fr; }
+      .content-grid { grid-template-columns: 1fr; }
+      .gallery-masonry { grid-template-columns: 1fr 1fr; }
+      .gallery-masonry img:first-child { grid-column: span 2; }
+      .sidebar { position: static; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="index.html" class="nav-logo">Anderson Uceta</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="about.html" class="active">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-toggle" onclick="toggleNav()"><span></span><span></span><span></span></div>
+  </nav>
+
+  <div class="page">
+    <section class="section">
+      <div class="container">
+        <a class="back-link" href="about.html">← Back to About</a>
+
+        <div class="academy-header">
+          <img class="academy-logo" src="assets/tecno-mec/logo.png" alt="Tecno-Mec Academy logo">
+          <div>
+            <div class="academy-eyebrow">// educational initiative</div>
+            <h1 class="academy-title">Tecno-Mec Academy</h1>
+            <div class="academy-slogan">"Tecnología para la vida"</div>
+            <div class="academy-meta">Santo Domingo, Dominican Republic · 2020 – 2023</div>
+          </div>
+        </div>
+
+        <div class="gallery-masonry">
+          <img src="assets/tecno-mec/img5.png" alt="Classroom session - mBot Ranger assembly">
+          <img src="assets/tecno-mec/img1.png" alt="Student using VR headset">
+          <img src="assets/tecno-mec/img2.png" alt="Student assembling educational robot">
+          <img src="assets/tecno-mec/img3.png" alt="Hands-on robot building">
+          <img src="assets/tecno-mec/img4.png" alt="Students coding in Scratch">
+        </div>
+
+        <div class="content-grid">
+          <div class="prose">
+            <h2>// The Mission</h2>
+            <p>Tecno-Mec Academy was an educational robotics and technology program I founded in the Dominican Republic with a single goal: make engineering and technology accessible to children from an early age, through hands-on learning and real projects.</p>
+            <p>The academy's slogan — <em>"Tecnología para la vida"</em> (Technology for life) — reflected the belief that technical skills are not just for engineers, but a foundation for problem-solving in any field.</p>
+
+            <h2>// What Students Learned</h2>
+            <ul>
+              <li>Robot assembly and mechanics using mBot Ranger kits — students built robots from scratch, learning about motors, sensors, and structural design</li>
+              <li>Programming fundamentals using Scratch, creating interactive 2D games and animations</li>
+              <li>3D design and digital fabrication using Tinkercad and 3D printing</li>
+              <li>Basic electronics and circuit design using Rokenbok Education engineering kits</li>
+              <li>Virtual reality exploration — introducing immersive technology as a creative and educational tool</li>
+            </ul>
+
+            <h2>// Teaching Approach</h2>
+            <p>Every session was project-based. Students didn't just learn concepts — they built something tangible by the end of each class. This hands-on approach made abstract ideas like circuits, algorithms, and mechanical design concrete and intuitive for children of all ages.</p>
+            <p>I designed all the curricula from scratch, adapting complexity to different age groups while keeping the core principle consistent: learn by doing.</p>
+
+            <h2>// Why It Mattered</h2>
+            <p>Running Tecno-Mec reinforced something important about how I approach engineering: the ability to explain a complex system simply is just as valuable as being able to build it. Teaching children to think like engineers — to break problems down, iterate, and not be afraid to fail — shaped how I communicate technical ideas with non-technical stakeholders today.</p>
+          </div>
+
+          <div class="sidebar">
+            <div class="stat-row" style="grid-template-columns:1fr 1fr">
+              <div class="stat-mini"><div class="sn">3</div><div class="sl">Years running</div></div>
+              <div class="stat-mini"><div class="sn">DR</div><div class="sl">Santo Domingo</div></div>
+            </div>
+
+            <div class="sidebar-card">
+              <div class="sidebar-title">Tools & Technologies</div>
+              <div class="stack">
+                <span class="stag">mBot Ranger</span>
+                <span class="stag">Scratch</span>
+                <span class="stag">Tinkercad</span>
+                <span class="stag">3D Printing</span>
+                <span class="stag">Rokenbok Kits</span>
+                <span class="stag">Virtual Reality</span>
+                <span class="stag">Arduino</span>
+              </div>
+            </div>
+
+            <div class="sidebar-card">
+              <div class="sidebar-title">Find us online</div>
+              <a class="social-link" href="https://instagram.com/tecnomecatronica" target="_blank">
+                <div class="social-icon si-ig">ig</div>
+                <div class="social-body">
+                  <div class="sl-label">Instagram</div>
+                  <div class="sl-handle">@tecnomecatronica</div>
+                </div>
+              </a>
+              <a class="social-link" href="https://www.youtube.com/watch?v=LUmdB9Pup2c" target="_blank">
+                <div class="social-icon si-yt">▶</div>
+                <div class="social-body">
+                  <div class="sl-label">YouTube</div>
+                  <div class="sl-handle">Watch our content</div>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <p>Built by Anderson Uceta · <a href="https://github.com/andersonuz" target="_blank">GitHub</a> · <a href="https://www.linkedin.com/in/anderson-joiada-uceta-b%C3%A1ez-691041145/" target="_blank">LinkedIn</a></p>
+  </footer>
+  <script>function toggleNav(){document.getElementById('navLinks').classList.toggle('open');}</script>
+</body>
+</html>
