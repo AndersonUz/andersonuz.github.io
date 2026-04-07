@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projects · Anderson Uceta</title>
+  <meta name="description" content="Industrial automation, software, and AI/ML projects by Anderson Uceta.">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .page-hero {
+      padding: 4rem 0 2rem;
+      border-bottom: 0.5px solid var(--border);
+    }
+
+    .filter-bar {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 2.5rem;
+    }
+
+    .filter-btn {
+      padding: 6px 16px;
+      border-radius: 4px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      border: 0.5px solid var(--border2);
+      background: transparent;
+      color: var(--text-muted);
+      transition: all 0.15s;
+    }
+
+    .filter-btn:hover    { border-color: var(--blue); color: var(--blue); }
+    .filter-btn.active   { background: var(--blue-dark); color: #e8e8ff; border-color: var(--blue); }
+    .filter-btn.f-ind    { }
+    .filter-btn.f-ind.active   { background: #0a1f17; color: var(--green); border-color: #1a4a35; }
+    .filter-btn.f-soft.active  { background: #0a0a2a; color: var(--blue); border-color: #2a2a5a; }
+    .filter-btn.f-ai.active    { background: #14082a; color: var(--purple); border-color: #3a1a5a; }
+
+    .proj-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .proj-card {
+      background: var(--bg-card);
+      border: 0.5px solid var(--border);
+      border-radius: 8px;
+      padding: 1.4rem;
+      transition: border-color 0.2s, background 0.2s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .proj-card:hover { border-color: var(--blue-dark); background: var(--bg-card2); }
+    .proj-card[data-hidden="true"] { display: none; }
+
+    .proj-type {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .type-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
+    .pt-ind  { color: var(--green);  } .pt-ind .type-dot  { background: var(--green); }
+    .pt-soft { color: var(--blue);   } .pt-soft .type-dot { background: var(--blue); }
+    .pt-ai   { color: var(--purple); } .pt-ai .type-dot   { background: var(--purple); }
+
+    .proj-name  { font-size: 15px; font-weight: 500; color: #c8cadc; margin-bottom: 8px; }
+    .proj-desc  { font-size: 13px; color: var(--text-muted); line-height: 1.75; margin-bottom: 12px; flex: 1; }
+    .stack      { display: flex; flex-wrap: wrap; gap: 4px; }
+    .stag       { background: #0a0a18; border-radius: 2px; padding: 2px 7px; font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--text-dim); border: 0.5px solid #1a1a30; }
+
+    .wip { display: inline-block; background: #1a0a2a; border: 0.5px solid #3a1a5a; border-radius: 3px; padding: 1px 6px; font-size: 9px; color: var(--purple); font-family: 'JetBrains Mono', monospace; margin-left: 5px; vertical-align: middle; }
+
+    .proj-footer {
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 0.5px solid var(--border);
+      display: flex;
+      gap: 8px;
+    }
+
+    .proj-link {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+      text-decoration: none;
+      border: 0.5px solid var(--border2);
+      padding: 4px 10px;
+      border-radius: 3px;
+      transition: all 0.15s;
+    }
+    .proj-link:hover { color: var(--blue); border-color: var(--blue); }
+
+    .coming-soon {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--text-dim);
+      letter-spacing: 0.5px;
+    }
+
+    @media (max-width: 640px) {
+      .proj-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">Anderson Uceta</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="projects.html" class="active">Projects</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-toggle" onclick="toggleNav()">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <div class="page">
+    <section class="section page-hero">
+      <div class="container">
+        <div class="eyebrow">// projects</div>
+        <h1 class="section-title">All Projects</h1>
+
+        <div class="filter-bar">
+          <button class="filter-btn active" onclick="filter('all', this)">All</button>
+          <button class="filter-btn f-ind"  onclick="filter('industrial', this)">Industrial</button>
+          <button class="filter-btn f-soft" onclick="filter('software', this)">Software</button>
+          <button class="filter-btn f-ai"   onclick="filter('ai', this)">AI / ML</button>
+        </div>
+
+        <div class="proj-grid" id="projGrid">
+
+          <div class="proj-card" data-cat="industrial">
+            <div class="proj-type pt-ind"><span class="type-dot"></span>Industrial</div>
+            <div class="proj-name">SCADA + KPI Dashboard</div>
+            <div class="proj-desc">Designed and deployed an OT/IT integration connecting SCADA systems with a Power BI data platform, enabling real-time production monitoring and automated KPI reporting across multiple manufacturing plants. Reduced manual reporting time and gave operations teams live visibility into line performance.</div>
+            <div class="stack"><span class="stag">SCADA</span><span class="stag">Power BI</span><span class="stag">SQL</span><span class="stag">PLC integration</span><span class="stag">Excel</span></div>
+            <div class="proj-footer"><span class="coming-soon">CMI · 2023–Present</span></div>
+          </div>
+
+          <div class="proj-card" data-cat="software">
+            <div class="proj-type pt-soft"><span class="type-dot"></span>Software</div>
+            <div class="proj-name">Industrial Data Pipeline</div>
+            <div class="proj-desc">Built a Python-based data pipeline to extract, clean, and analyze sensor and production data from plant systems. Automated previously manual Excel workflows and made historical data queryable via SQL for operational decision-making.</div>
+            <div class="stack"><span class="stag">Python</span><span class="stag">pandas</span><span class="stag">MySQL</span><span class="stag">Excel</span><span class="stag">automation scripts</span></div>
+            <div class="proj-footer"><span class="coming-soon">CMI · 2023–Present</span></div>
+          </div>
+
+          <div class="proj-card" data-cat="ai">
+            <div class="proj-type pt-ai"><span class="type-dot"></span>AI / ML <span class="wip">WIP</span></div>
+            <div class="proj-name">Predictive Maintenance Model</div>
+            <div class="proj-desc">Developing a machine learning model to predict equipment failures using historical sensor data from manufacturing lines. The goal is to reduce unplanned downtime by identifying failure patterns before they occur.</div>
+            <div class="stack"><span class="stag">scikit-learn</span><span class="stag">pandas</span><span class="stag">numpy</span><span class="stag">Python</span><span class="stag">industrial sensor data</span></div>
+            <div class="proj-footer"><span class="coming-soon">Personal · 2025</span></div>
+          </div>
+
+          <div class="proj-card" data-cat="industrial">
+            <div class="proj-type pt-ind"><span class="type-dot"></span>Industrial</div>
+            <div class="proj-name">Inline Tubing Cutter V1921</div>
+            <div class="proj-desc">Designed and implemented a custom inline tubing cutter machine from concept to full commissioning at B. Braun Dominicana, a regulated medical device manufacturing environment. Managed the complete project lifecycle: mechanical design, control logic, testing, validation, and handoff.</div>
+            <div class="stack"><span class="stag">Mechatronics</span><span class="stag">PLC</span><span class="stag">Commissioning</span><span class="stag">Medical device standards</span></div>
+            <div class="proj-footer"><span class="coming-soon">B. Braun Dominicana · 2019–2020</span></div>
+          </div>
+
+          <div class="proj-card" data-cat="software">
+            <div class="proj-type pt-soft"><span class="type-dot"></span>Software</div>
+            <div class="proj-name">Power Apps – Operations Tool</div>
+            <div class="proj-desc">Built a Power Apps application to digitize manual field inspection forms and route approvals through Power Automate workflows. Eliminated paper-based processes across multiple production facilities.</div>
+            <div class="stack"><span class="stag">Power Apps</span><span class="stag">Power Automate</span><span class="stag">SharePoint</span></div>
+            <div class="proj-footer"><span class="coming-soon">CMI · 2024</span></div>
+          </div>
+
+          <div class="proj-card" data-cat="industrial">
+            <div class="proj-type pt-ind"><span class="type-dot"></span>Industrial</div>
+            <div class="proj-name">Educational Robotics Program</div>
+            <div class="proj-desc">Designed and delivered a 3-year robotics and automation curriculum at Colegio Calasanz, covering industrial control fundamentals, PLC logic, and programming. Introduced 100+ students to hands-on engineering problem-solving.</div>
+            <div class="stack"><span class="stag">PLC</span><span class="stag">Robotics</span><span class="stag">Curriculum design</span><span class="stag">Arduino</span></div>
+            <div class="proj-footer"><span class="coming-soon">Colegio Calasanz · 2020–2023</span></div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <p>Built by Anderson Uceta · <a href="https://github.com/andersonuceta" target="_blank">GitHub</a> · <a href="https://linkedin.com/in/andersonuceta" target="_blank">LinkedIn</a></p>
+  </footer>
+
+  <script>
+    function toggleNav() {
+      document.getElementById('navLinks').classList.toggle('open');
+    }
+
+    function filter(cat, btn) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.proj-card').forEach(card => {
+        const show = cat === 'all' || card.dataset.cat === cat;
+        card.dataset.hidden = show ? 'false' : 'true';
+      });
+    }
+  </script>
+</body>
+</html>

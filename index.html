@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anderson Uceta · Automation & Software Engineer</title>
+  <meta name="description" content="Mechatronics Engineer bridging industrial automation and software development. PLC, SCADA, Python, Data & AI.">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* ── Hero ── */
+    .hero {
+      min-height: calc(100vh - var(--nav-h));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 4rem 2rem;
+    }
+
+    .hero-inner { max-width: 680px; width: 100%; }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #0f0f22;
+      border: 0.5px solid var(--border2);
+      border-radius: 20px;
+      padding: 5px 16px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+      margin-bottom: 2.2rem;
+    }
+
+    .status-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: #22c55e;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.3; }
+    }
+
+    .hero-name {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: clamp(2.8rem, 8vw, 5rem);
+      font-weight: 500;
+      color: var(--text);
+      letter-spacing: -2px;
+      line-height: 1.05;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-name .accent { color: var(--blue); }
+
+    .hero-role {
+      font-size: clamp(0.9rem, 2.5vw, 1.05rem);
+      color: var(--text-muted);
+      font-weight: 300;
+      letter-spacing: 0.5px;
+      margin-bottom: 1.8rem;
+    }
+
+    .hero-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 1.8rem;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 13px;
+      border-radius: 4px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      border: 0.5px solid;
+    }
+
+    .hb-ind    { background: #0a1f17; border-color: #1a4a35; color: var(--green); }
+    .hb-soft   { background: #0a0a2a; border-color: #2a2a5a; color: var(--blue); }
+    .hb-ai     { background: #14082a; border-color: #3a1a5a; color: var(--purple); }
+    .hb-loc    { background: #0f0f22; border-color: var(--border2); color: var(--text-muted); }
+
+    .badge-dot { width: 5px; height: 5px; border-radius: 50%; }
+    .hb-ind  .badge-dot { background: var(--green); }
+    .hb-soft .badge-dot { background: var(--blue); }
+    .hb-ai   .badge-dot { background: var(--purple); }
+    .hb-loc  .badge-dot { background: var(--text-muted); }
+
+    .hero-desc {
+      font-size: 0.95rem;
+      color: var(--text-dim);
+      line-height: 1.9;
+      max-width: 480px;
+      margin: 0 auto 2.5rem;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 3.5rem;
+    }
+
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 3.5rem;
+      flex-wrap: wrap;
+      padding-top: 2.5rem;
+      border-top: 0.5px solid var(--border);
+    }
+
+    .stat-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.8rem;
+      font-weight: 500;
+      color: var(--blue);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .stat-label {
+      font-size: 10px;
+      color: var(--text-dim);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    /* ── Skills ── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .skill-card { background: var(--bg-card); border: 0.5px solid var(--border); border-radius: 8px; padding: 1.1rem 1.2rem; }
+    .skill-cat  { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--blue); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 10px; }
+    .tags       { display: flex; flex-wrap: wrap; gap: 5px; }
+
+    /* ── Featured projects ── */
+    .proj-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 2rem;
+    }
+
+    .proj-card { background: var(--bg-card); border: 0.5px solid var(--border); border-radius: 8px; padding: 1.2rem; transition: border-color 0.2s, background 0.2s; }
+    .proj-card:hover { border-color: var(--blue-dark); background: var(--bg-card2); }
+
+    .proj-type { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 7px; display: flex; align-items: center; gap: 5px; }
+    .type-dot  { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
+
+    .pt-ind    { color: var(--green); } .pt-ind .type-dot  { background: var(--green); }
+    .pt-soft   { color: var(--blue);  } .pt-soft .type-dot { background: var(--blue); }
+    .pt-ai     { color: var(--purple);} .pt-ai .type-dot   { background: var(--purple); }
+
+    .proj-name { font-size: 14px; font-weight: 500; color: #c8cadc; margin-bottom: 6px; }
+    .proj-desc { font-size: 12px; color: var(--text-dim); line-height: 1.7; margin-bottom: 10px; }
+    .stack     { display: flex; flex-wrap: wrap; gap: 4px; }
+    .stag      { background: #0a0a18; border-radius: 2px; padding: 2px 7px; font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--text-dim); border: 0.5px solid #1a1a30; }
+
+    .wip { display: inline-block; background: #1a0a2a; border: 0.5px solid #3a1a5a; border-radius: 3px; padding: 1px 6px; font-size: 9px; color: var(--purple); font-family: 'JetBrains Mono', monospace; margin-left: 5px; vertical-align: middle; }
+
+    .view-all-wrap { text-align: center; }
+
+    @media (max-width: 640px) {
+      .skills-grid, .proj-grid { grid-template-columns: 1fr; }
+      .hero-stats { gap: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="index.html" class="nav-logo">Anderson Uceta</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-toggle" id="navToggle" onclick="toggleNav()">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <div class="page">
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="status-pill">
+          <span class="status-dot"></span>
+          OPEN TO NEW OPPORTUNITIES
+        </div>
+
+        <h1 class="hero-name">Anderson<br><span class="accent">Uceta</span></h1>
+        <p class="hero-role">Automation &amp; Software Engineer</p>
+
+        <div class="hero-badges">
+          <span class="hero-badge hb-ind"><span class="badge-dot"></span>Industrial IoT</span>
+          <span class="hero-badge hb-soft"><span class="badge-dot"></span>Python · JS · SQL</span>
+          <span class="hero-badge hb-ai"><span class="badge-dot"></span>Data &amp; AI</span>
+          <span class="hero-badge hb-loc"><span class="badge-dot"></span>Santo Domingo, DR · Remote</span>
+        </div>
+
+        <p class="hero-desc">
+          Bridging industrial automation and modern software.<br>
+          7+ years connecting OT systems with digital platforms<br>
+          across Central America &amp; the Caribbean.
+        </p>
+
+        <div class="hero-btns">
+          <a class="btn btn-primary" href="projects.html">View Projects ↓</a>
+          <a class="btn btn-ghost" href="assets/cv_EN.pdf" download>Download CV ↗</a>
+          <a class="btn btn-ghost" href="https://linkedin.com/in/andersonuceta" target="_blank">LinkedIn ↗</a>
+        </div>
+
+        <div class="hero-stats">
+          <div class="stat">
+            <div class="stat-num">7+</div>
+            <div class="stat-label">Years of experience</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">3</div>
+            <div class="stat-label">Mechatronics credentials</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">CR · GT · DO</div>
+            <div class="stat-label">Countries worked in</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section class="section">
+      <div class="container">
+        <div class="eyebrow">// skills</div>
+        <h2 class="section-title">Technical Stack</h2>
+        <div class="skills-grid">
+          <div class="skill-card">
+            <div class="skill-cat">Industrial Automation</div>
+            <div class="tags">
+              <span class="tag tag-blue">PLC Programming</span>
+              <span class="tag tag-blue">SCADA / HMI</span>
+              <span class="tag tag-green">Profibus</span>
+              <span class="tag tag-green">Modbus</span>
+              <span class="tag tag-green">EtherNet/IP</span>
+              <span class="tag">Instrumentation</span>
+              <span class="tag">Ladder · FBD · STL</span>
+            </div>
+          </div>
+          <div class="skill-card">
+            <div class="skill-cat">Software &amp; Programming</div>
+            <div class="tags">
+              <span class="tag tag-blue">Python</span>
+              <span class="tag tag-blue">JavaScript</span>
+              <span class="tag">SQL / MySQL</span>
+              <span class="tag">Node.js</span>
+              <span class="tag">C#</span>
+            </div>
+          </div>
+          <div class="skill-card">
+            <div class="skill-cat">Data &amp; AI</div>
+            <div class="tags">
+              <span class="tag tag-purple">scikit-learn</span>
+              <span class="tag tag-purple">pandas</span>
+              <span class="tag tag-purple">numpy</span>
+              <span class="tag">Power BI</span>
+              <span class="tag">Excel Advanced</span>
+              <span class="tag">Machine Learning</span>
+            </div>
+          </div>
+          <div class="skill-card">
+            <div class="skill-cat">Microsoft Platform</div>
+            <div class="tags">
+              <span class="tag">Power Apps</span>
+              <span class="tag">Power Automate</span>
+              <span class="tag">Power BI</span>
+              <span class="tag">Azure</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURED PROJECTS -->
+    <section class="section">
+      <div class="container">
+        <div class="eyebrow">// projects</div>
+        <h2 class="section-title">Featured Projects</h2>
+        <div class="proj-grid">
+
+          <div class="proj-card">
+            <div class="proj-type pt-ind"><span class="type-dot"></span>Industrial</div>
+            <div class="proj-name">SCADA + KPI Dashboard</div>
+            <div class="proj-desc">OT/IT integration connecting SCADA systems with a Power BI platform. Real-time production monitoring and automated KPI reporting across multiple plants.</div>
+            <div class="stack"><span class="stag">SCADA</span><span class="stag">Power BI</span><span class="stag">SQL</span><span class="stag">PLC</span></div>
+          </div>
+
+          <div class="proj-card">
+            <div class="proj-type pt-soft"><span class="type-dot"></span>Software</div>
+            <div class="proj-name">Industrial Data Pipeline</div>
+            <div class="proj-desc">Python pipeline to extract, clean, and analyze sensor data from plant systems. Replaced manual Excel workflows and made data queryable via SQL.</div>
+            <div class="stack"><span class="stag">Python</span><span class="stag">pandas</span><span class="stag">MySQL</span><span class="stag">automation</span></div>
+          </div>
+
+          <div class="proj-card">
+            <div class="proj-type pt-ai"><span class="type-dot"></span>AI / ML <span class="wip">WIP</span></div>
+            <div class="proj-name">Predictive Maintenance Model</div>
+            <div class="proj-desc">ML model predicting equipment failures from historical sensor data. Targeting reduction of unplanned downtime in manufacturing lines.</div>
+            <div class="stack"><span class="stag">scikit-learn</span><span class="stag">pandas</span><span class="stag">numpy</span><span class="stag">Python</span></div>
+          </div>
+
+          <div class="proj-card">
+            <div class="proj-type pt-ind"><span class="type-dot"></span>Industrial</div>
+            <div class="proj-name">Inline Tubing Cutter V1921</div>
+            <div class="proj-desc">Full design &amp; commissioning cycle at B. Braun Dominicana in a regulated medical device environment. Concept to handoff.</div>
+            <div class="stack"><span class="stag">Mechatronics</span><span class="stag">PLC</span><span class="stag">Commissioning</span></div>
+          </div>
+
+        </div>
+        <div class="view-all-wrap">
+          <a class="btn btn-ghost" href="projects.html">View all projects →</a>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <footer>
+    <p>Built by Anderson Uceta · <a href="https://github.com/andersonuceta" target="_blank">GitHub</a> · <a href="https://linkedin.com/in/andersonuceta" target="_blank">LinkedIn</a></p>
+  </footer>
+
+  <script>
+    function toggleNav() {
+      document.getElementById('navLinks').classList.toggle('open');
+    }
+  </script>
+</body>
+</html>

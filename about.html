@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About · Anderson Uceta</title>
+  <meta name="description" content="Mechatronics Engineer with 7+ years in industrial automation and software development.">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    .about-text p {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.9;
+      margin-bottom: 1.2rem;
+    }
+
+    .stats-col { display: flex; flex-direction: column; gap: 10px; }
+
+    .stat-card {
+      background: var(--bg-card);
+      border: 0.5px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem 1.2rem;
+    }
+
+    .stat-card .stat-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 2rem;
+      font-weight: 500;
+      color: var(--blue);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .stat-card .stat-label {
+      font-size: 10px;
+      color: var(--text-dim);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    /* Timeline */
+    .timeline { position: relative; padding-left: 1.5rem; }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 8px; bottom: 8px;
+      width: 0.5px;
+      background: var(--border2);
+    }
+
+    .tl-item {
+      position: relative;
+      margin-bottom: 2rem;
+    }
+
+    .tl-item::before {
+      content: '';
+      position: absolute;
+      left: -1.56rem; top: 8px;
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--bg-card);
+      border: 1.5px solid var(--blue);
+    }
+
+    .tl-item.current::before { background: var(--blue); }
+
+    .tl-period {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--text-dim);
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+    }
+
+    .tl-role {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+
+    .tl-company {
+      font-size: 13px;
+      color: var(--blue);
+      margin-bottom: 6px;
+    }
+
+    .tl-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    /* Education */
+    .edu-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .edu-card {
+      background: var(--bg-card);
+      border: 0.5px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem 1.2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .edu-degree { font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 3px; }
+    .edu-school { font-size: 12px; color: var(--blue); }
+    .edu-period { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-dim); white-space: nowrap; }
+
+    /* Certs */
+    .cert-list { display: flex; flex-direction: column; gap: 8px; }
+
+    .cert-item {
+      background: var(--bg-card);
+      border: 0.5px solid var(--border);
+      border-radius: 8px;
+      padding: 0.9rem 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .cert-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--blue); flex-shrink: 0; }
+    .cert-name { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+
+    /* CV download */
+    .cv-block {
+      background: var(--bg-card);
+      border: 0.5px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .cv-block p { font-size: 14px; color: var(--text-muted); }
+
+    .cv-btns { display: flex; gap: 8px; }
+
+    @media (max-width: 640px) {
+      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .edu-card { flex-direction: column; align-items: flex-start; gap: 4px; }
+      .cv-block { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">Anderson Uceta</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="about.html" class="active">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-toggle" onclick="toggleNav()">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <div class="page">
+
+    <!-- BIO -->
+    <section class="section">
+      <div class="container">
+        <div class="eyebrow">// about</div>
+        <h1 class="section-title">About Me</h1>
+        <div class="about-grid">
+          <div class="about-text">
+            <p>I'm a Mechatronics Engineer with 7+ years of experience at the intersection of industrial automation and software development. My background spans PLC programming, SCADA systems, and industrial instrumentation — combined with a growing skill set in Python, data science, and AI/ML.</p>
+            <p>Currently, I lead automation initiatives across multiple production facilities at CMI, coordinating cross-functional teams in Central America and the Caribbean. I'm passionate about Industry 4.0 — connecting physical systems with intelligent software to drive real operational impact.</p>
+            <p>Outside of work, I'm continuously learning: building data pipelines, exploring machine learning, and developing software projects that bridge my industrial background with modern engineering tools.</p>
+          </div>
+          <div class="stats-col">
+            <div class="stat-card">
+              <div class="stat-num">7+</div>
+              <div class="stat-label">Years of experience</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-num">3</div>
+              <div class="stat-label">Mechatronics credentials</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-num">CR · GT · DO</div>
+              <div class="stat-label">Countries worked in</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TIMELINE -->
+    <section class="section">
+      <div class="container">
+        <div class="eyebrow">// experience</div>
+        <h2 class="section-title">Work History</h2>
+        <div class="timeline">
+
+          <div class="tl-item current">
+            <div class="tl-period">2023 – PRESENT</div>
+            <div class="tl-role">Industrial Automation Engineer / Applications Coordinator</div>
+            <div class="tl-company">CMI – Centroamérica y el Caribe · Hybrid / Regional</div>
+            <div class="tl-desc">Lead automation initiatives across multiple production facilities. Design PLC-based control systems, architect SCADA/data integrations, and develop Power BI dashboards to support data-driven operations. Drive Industry 4.0 digitization projects connecting OT and IT layers.</div>
+          </div>
+
+          <div class="tl-item">
+            <div class="tl-period">2020 – 2023</div>
+            <div class="tl-role">Educational Robotics Coordinator</div>
+            <div class="tl-company">Colegio Calasanz · Santo Domingo, DR</div>
+            <div class="tl-desc">Designed and delivered robotics and automation curricula covering industrial control fundamentals, PLC logic, and programming. Introduced students to engineering problem-solving through project-based learning.</div>
+          </div>
+
+          <div class="tl-item">
+            <div class="tl-period">2020</div>
+            <div class="tl-role">STEAM Educator (Automation &amp; Robotics)</div>
+            <div class="tl-company">IGLOBAL / Ministerio de Educación · Dominican Republic</div>
+            <div class="tl-desc">Supported national STEAM initiatives through teacher training and technical workshops on robotics and automation fundamentals.</div>
+          </div>
+
+          <div class="tl-item">
+            <div class="tl-period">2019 – 2020</div>
+            <div class="tl-role">Maintenance Technician</div>
+            <div class="tl-company">B. Braun Dominicana · Santo Domingo, DR</div>
+            <div class="tl-desc">Designed and implemented an inline tubing cutter machine (V1921) — full project cycle from concept to commissioning in a regulated medical device environment. Performed preventive and corrective maintenance ensuring production continuity.</div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- EDUCATION -->
+    <section class="section">
+      <div class="container">
+        <div class="eyebrow">// education</div>
+        <h2 class="section-title">Education</h2>
+        <div class="edu-grid">
+          <div class="edu-card">
+            <div>
+              <div class="edu-degree">B.Eng. in Mechatronics Engineering</div>
+              <div class="edu-school">INTEC – Instituto Tecnológico de Santo Domingo</div>
+            </div>
+            <div class="edu-period">2021 – 2025</div>
+          </div>
+          <div class="edu-card">
+            <div>
+              <div class="edu-degree">Associate Degree in Mechatronics</div>
+              <div class="edu-school">ITLA – Instituto Tecnológico de Las Américas</div>
+            </div>
+            <div class="edu-period">2017 – 2019</div>
+          </div>
+          <div class="edu-card">
+            <div>
+              <div class="edu-degree">Technical Baccalaureate in Mechatronics</div>
+              <div class="edu-school">Secondary technical education · Industrial automation fundamentals</div>
+            </div>
+            <div class="edu-period">–</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CERTIFICATIONS -->
+    <section class="section">
+      <div class="container">
+        <div class="eyebrow">// certifications</div>
+        <h2 class="section-title">Continuous Learning</h2>
+        <div class="cert-list">
+          <div class="cert-item">
+            <div class="cert-dot"></div>
+            <div class="cert-name">FreeCodeCamp – Responsive Web Design, JavaScript Algorithms &amp; Data Structures, Data Analysis with Python</div>
+          </div>
+          <div class="cert-item">
+            <div class="cert-dot"></div>
+            <div class="cert-name">Microsoft Learn – Python, C#, Power Apps, Power Automate</div>
+          </div>
+          <div class="cert-item">
+            <div class="cert-dot"></div>
+            <div class="cert-name">Data Science &amp; Machine Learning – scikit-learn, pandas, numpy (self-directed, 2024–2025)</div>
+          </div>
+          <div class="cert-item">
+            <div class="cert-dot"></div>
+            <div class="cert-name">Industrial Automation &amp; PLC Programming – ongoing professional development</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CV DOWNLOAD -->
+    <section class="section">
+      <div class="container">
+        <div class="cv-block">
+          <p>Want the full picture? Download my resume in English or Spanish.</p>
+          <div class="cv-btns">
+            <a class="btn btn-primary" href="assets/cv_EN.pdf" download>CV (English) ↓</a>
+            <a class="btn btn-ghost" href="assets/cv_ES.pdf" download>CV (Español) ↓</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <footer>
+    <p>Built by Anderson Uceta · <a href="https://github.com/andersonuceta" target="_blank">GitHub</a> · <a href="https://linkedin.com/in/andersonuceta" target="_blank">LinkedIn</a></p>
+  </footer>
+
+  <script>
+    function toggleNav() {
+      document.getElementById('navLinks').classList.toggle('open');
+    }
+  </script>
+</body>
+</html>
