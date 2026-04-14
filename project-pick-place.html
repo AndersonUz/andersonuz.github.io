@@ -1,197 +1,226 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pick & Place PLC Control & Monitoring · Anderson Uceta</title>
-    <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pick & Place PLC Control · Anderson Uceta</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .page-hero { background: var(--navy); padding: 3.5rem 0 2.5rem; position: relative; overflow: hidden; }
+    .page-hero::before { content:''; position:absolute; inset:0; background-image:linear-gradient(#ffffff05 1px,transparent 1px),linear-gradient(90deg,#ffffff05 1px,transparent 1px); background-size:30px 30px; }
+    .accent-bar { position:absolute; left:0; top:0; bottom:0; width:4px; background:var(--amber); }
+    .page-hero-inner { position:relative; z-index:1; }
+    .content-grid { display: grid; grid-template-columns: 1fr 280px; gap: 3rem; align-items: start; }
+    .sidebar { position: sticky; top: calc(var(--nav-h) + 2rem); }
+
+    .arch-block {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1rem 1.2rem;
+      margin: 1rem 0;
+      font-family: 'Barlow Condensed', sans-serif;
+    }
+
+    .fc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 1rem 0; }
+    .fc-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-top: 3px solid var(--amber);
+      border-radius: 0 0 4px 4px;
+      padding: 0.9rem 1rem;
+    }
+    .fc-card.blue { border-top-color: var(--blue-eng); }
+    .fc-name { font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 3px; }
+    .fc-lang { font-family: 'Barlow Condensed', sans-serif; font-size: 10px; font-weight: 600; color: var(--amber); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; }
+    .fc-card.blue .fc-lang { color: var(--blue-eng); }
+    .fc-desc { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+
+    .step-table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 12px; }
+    .step-table th { background: var(--navy); color: var(--amber); font-family: 'Barlow Condensed', sans-serif; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; padding: 6px 10px; text-align: left; }
+    .step-table td { padding: 5px 10px; border-bottom: 1px solid var(--border); color: var(--text-muted); vertical-align: top; }
+    .step-table tr:last-child td { border-bottom: none; }
+    .step-table td:first-child { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; color: var(--amber); white-space: nowrap; }
+
+    .db-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin: 1rem 0; }
+    .db-item { background: var(--bg-card); border: 1px solid var(--border); border-radius: 2px; padding: 6px 10px; }
+    .db-var { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; color: var(--navy); }
+    .db-desc { font-size: 10px; color: var(--text-muted); }
+
+    .future-card {
+      background: var(--blue-light);
+      border: 1px solid #b5d4f4;
+      border-left: 3px solid var(--blue-eng);
+      border-radius: 0 4px 4px 0;
+      padding: 1rem 1.2rem;
+      margin-top: 1rem;
+    }
+    .future-title { font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 700; color: var(--blue-eng); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; }
+    .future-desc { font-size: 13px; color: #0c447c; line-height: 1.6; }
+
+    @media (max-width: 768px) { .content-grid { grid-template-columns: 1fr; } .sidebar { position: static; } .fc-grid { grid-template-columns: 1fr; } .gallery img:first-child { aspect-ratio: 16/9; } }
+  </style>
 </head>
 <body>
-    <nav class="nav">
-        <a href="index.html" class="nav-logo">ANDERSON UCETA</a>
-        <div class="nav-links">
-            <a href="index.html">Home</a>
-            <a href="projects.html">Projects</a>
-            <a href="about.html">About</a>
-            <a href="contact.html">Contact</a>
+  <nav>
+    <a href="index.html" class="nav-logo">ANDERSON <span>UCETA</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="projects.html" class="active">Projects</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-toggle" onclick="toggleNav()"><span></span><span></span><span></span></div>
+  </nav>
+
+  <div class="page">
+    <section class="page-hero">
+      <div class="accent-bar"></div>
+      <div class="container page-hero-inner">
+        <a class="back-link" href="projects.html" style="color:var(--steel)">← Back to projects</a>
+        <div class="proj-header" style="border-bottom-color:var(--navy-dim)">
+          <div class="proj-category" style="color:var(--amber)"><div class="cat-bar"></div>Industrial · PLC Programming · Simulation</div>
+          <h1 class="proj-title" style="color:#fff">Pick &amp; Place — PLC Control &amp; Production Monitoring</h1>
+          <p class="proj-subtitle" style="color:var(--steel)">Fully programmed Pick &amp; Place system with real-time production monitoring, built from scratch using TIA Portal V17, PLCSIM (S7-1500), and Factory I/O. Designed to demonstrate end-to-end PLC programming skills — from safety logic to sequence control to production analytics.</p>
+          <div class="meta-row" style="border-top-color:var(--navy-dim)">
+            <div><div class="meta-label" style="color:var(--steel-dark)">Context</div><div class="meta-value" style="color:var(--steel)">Personal Project</div></div>
+            <div><div class="meta-label" style="color:var(--steel-dark)">Year</div><div class="meta-value" style="color:var(--steel)">2025</div></div>
+            <div><div class="meta-label" style="color:var(--steel-dark)">Category</div><div class="meta-value" style="color:var(--steel)">Industrial Automation · PLC · Simulation</div></div>
+            <div><div class="meta-label" style="color:var(--steel-dark)">Role</div><div class="meta-value" style="color:var(--steel)">Full project — design, programming, monitoring</div></div>
+          </div>
         </div>
-    </nav>
+      </div>
+    </section>
 
-    <main class="project-detail">
-        <a href="projects.html" class="back-link">← Back to projects</a>
-        
-        <div class="project-category">Industrial Automation · IIoT</div>
-        
-        <h1>Pick & Place — PLC Control & Production Monitoring</h1>
-        
-        <p class="project-intro">
-            Fully programmed Pick & Place system with structured PLC code and real-time cycle time monitoring — built from scratch using TIA Portal V17, PLCSIM (S7-1500), and Factory I/O.
-        </p>
-
-        <div class="project-meta">
-            <div class="meta-item">
-                <span class="meta-label">Client</span>
-                <span class="meta-value">Personal Project</span>
-            </div>
-            <div class="meta-item">
-                <span class="meta-label">Year</span>
-                <span class="meta-value">2026</span>
-            </div>
-            <div class="meta-item">
-                <span class="meta-label">Category</span>
-                <span class="meta-value">PLC Programming · Production Monitoring</span>
-            </div>
-            <div class="meta-item">
-                <span class="meta-label">Role</span>
-                <span class="meta-value">Automation engineer & system designer</span>
-            </div>
-        </div>
-
-        <div class="project-images">
-            <img src="assets/projects/pick-place/factory_io_scene.png" alt="Factory I/O Pick and Place scene running">
-            <img src="assets/projects/pick-place/watch_table.png" alt="TIA Portal Watch Table showing real-time production data">
+    <section class="light-section">
+      <div class="container">
+        <div class="gallery">
+          <img src="assets/projects/pick-place/img1.png" alt="Factory I/O simulation scene">
+          <img src="assets/projects/pick-place/img2.png" alt="TIA Portal program blocks">
+          <img src="assets/projects/pick-place/img3.png" alt="Watch table — live DB1 values">
+          <img src="assets/projects/pick-place/img4.png" alt="FC1 — Ladder safety logic">
+          <img src="assets/projects/pick-place/img5.png" alt="FC2 — SCL sequence state machine">
         </div>
 
-        <section class="project-section">
+        <div class="content-grid">
+          <div class="prose">
+
             <h2>The Problem</h2>
-            <p>
-                In manufacturing lines with pick-and-place robots, unplanned downtime is one of the most expensive problems. Cycle time degradation — when a machine gradually slows down — typically goes unnoticed until a full stop occurs. By the time maintenance is called, production has already been lost. Most plants lack real-time visibility into cycle-by-cycle performance.
-            </p>
-        </section>
+            <p>In manufacturing lines with robotic pick-and-place systems, unplanned downtime is one of the most costly issues. Cycle time degradation — when a machine gradually slows down — often goes unnoticed until a full stop occurs. By the time maintenance is called, production has already been lost.</p>
 
-        <section class="project-section">
             <h2>The Solution</h2>
-            <p>
-                A complete, modular PLC program that controls a cartesian Pick & Place robot while simultaneously monitoring production KPIs in real time. The system measures every cycle, calculates statistical trends (average, minimum, maximum cycle times), and tracks machine states — building the foundation for early degradation detection before failures occur.
-            </p>
-        </section>
+            <p>A complete PLC program that controls a Pick &amp; Place cartesian robot and simultaneously monitors production KPIs in real time. The system measures every cycle, tracks statistical trends (average, min, max), and lays the groundwork for early degradation detection.</p>
 
-        <section class="project-section">
-            <h2>Architecture</h2>
-            <div class="architecture-layers">
-                <div class="arch-layer">
-                    <span class="arch-tag">FC1</span>
-                    <div>
-                        <strong>Control — Safety & Master Logic (Ladder)</strong>
-                        <p>Start/Stop self-latching circuit, Emergency Stop handling with N.C. logic, fault detection and counting, forced output shutdown on stop — defense in depth</p>
-                    </div>
-                </div>
-                <div class="arch-layer">
-                    <span class="arch-tag">FC2</span>
-                    <div>
-                        <strong>Sequence — State Machine (SCL)</strong>
-                        <p>10-step state machine with sub-steps for motion synchronization, two-phase motion pattern (wait for start → wait for end), automatic cycle repetition, conveyor coordination</p>
-                    </div>
-                </div>
-                <div class="arch-layer">
-                    <span class="arch-tag">FC3</span>
-                    <div>
-                        <strong>Monitoring — Production Analytics (SCL)</strong>
-                        <p>Cycle time measurement via TON timer, statistical tracking (last, average, min, max), machine state classification, fault and piece counting</p>
-                    </div>
-                </div>
-                <div class="arch-layer">
-                    <span class="arch-tag">DB1</span>
-                    <div>
-                        <strong>Data — Centralized Process Variables</strong>
-                        <p>All control states, production counters, cycle time statistics, and diagnostic data accessible from all function blocks</p>
-                    </div>
-                </div>
+            <h2>Program Structure</h2>
+            <div class="fc-grid">
+              <div class="fc-card">
+                <div class="fc-name">FC1 — Control</div>
+                <div class="fc-lang">Ladder (LAD)</div>
+                <div class="fc-desc">Safety and master control logic — Start/Stop latching, Emergency Stop, fault detection, reset verification, and forced output shutdown.</div>
+              </div>
+              <div class="fc-card">
+                <div class="fc-name">FC2 — Sequence</div>
+                <div class="fc-lang">SCL</div>
+                <div class="fc-desc">State machine controlling the pick and place cycle — 10 main steps with two-phase motion pattern, automatic repetition, conveyor coordination.</div>
+              </div>
+              <div class="fc-card blue">
+                <div class="fc-name">FC3 — Monitoring</div>
+                <div class="fc-lang blue" style="color:var(--blue-eng)">SCL</div>
+                <div class="fc-desc">Real-time production analytics — cycle time measurement, statistical tracking (last, avg, min, max), machine state and fault counting.</div>
+              </div>
             </div>
-        </section>
 
-        <section class="project-section">
+            <h2>Sequence Logic — FC2</h2>
+            <p>The sequence is implemented as a CASE state machine in SCL. Each step controls physical outputs and waits for the appropriate sensor feedback before advancing. Motion axes use a two-phase pattern to avoid false transitions within the same scan cycle.</p>
+
+            <table class="step-table">
+              <thead><tr><th>Step</th><th>Action</th><th>Transition</th></tr></thead>
+              <tbody>
+                <tr><td>0</td><td>Idle — waiting</td><td>Running = TRUE</td></tr>
+                <tr><td>1</td><td>Start entry conveyor</td><td>Sensor_Entry = TRUE</td></tr>
+                <tr><td>2</td><td>Stop entry conveyor</td><td>Immediate</td></tr>
+                <tr><td>3 / 31</td><td>Lower Z axis</td><td>Moving_Z start → end</td></tr>
+                <tr><td>4</td><td>Activate gripper</td><td>Item_Detected = TRUE</td></tr>
+                <tr><td>5 / 51</td><td>Raise Z axis</td><td>Moving_Z start → end</td></tr>
+                <tr><td>6 / 61</td><td>Move X to exit position</td><td>Moving_X start → end</td></tr>
+                <tr><td>7 / 71</td><td>Lower Z at exit</td><td>Moving_Z start → end</td></tr>
+                <tr><td>8</td><td>Release gripper + raise Z</td><td>Item_Detected = FALSE</td></tr>
+                <tr><td>9 / 91</td><td>Return to home</td><td>All axes stopped</td></tr>
+              </tbody>
+            </table>
+
+            <h2>Production Monitoring — FC3</h2>
+            <p>Every completed cycle is measured using a TON timer as a stopwatch. FC3 computes a running average and tracks min/max cycle times — giving a real-time baseline for detecting performance degradation before it causes downtime.</p>
+
+            <div class="db-grid">
+              <div class="db-item"><div class="db-var">CycleTime_Last</div><div class="db-desc">Last cycle duration (ms)</div></div>
+              <div class="db-item"><div class="db-var">CycleTime_Avg</div><div class="db-desc">Moving average (ms)</div></div>
+              <div class="db-item"><div class="db-var">CycleTime_Min</div><div class="db-desc">Best cycle recorded (ms)</div></div>
+              <div class="db-item"><div class="db-var">CycleTime_Max</div><div class="db-desc">Worst cycle recorded (ms)</div></div>
+              <div class="db-item"><div class="db-var">CycleCount</div><div class="db-desc">Total pieces completed</div></div>
+              <div class="db-item"><div class="db-var">MachineState</div><div class="db-desc">0=Idle · 1=Run · 2=Fault</div></div>
+            </div>
+
             <h2>Key Technical Decisions</h2>
-            <ul class="project-list">
-                <li><strong>Two-phase motion pattern</strong> — Factory I/O axis signals are TRUE during motion, requiring a start-detection sub-step to prevent same-scan false transitions</li>
-                <li><strong>Separate safety layer</strong> — FC1 handles all safety independently; if the sequence has a bug, safety still forces outputs OFF on emergency</li>
-                <li><strong>TON as stopwatch</strong> — Used a timer on-delay with a long preset as a cycle chronometer instead of system clock reads — simpler and reliable in PLCSIM</li>
-                <li><strong>Exit conveyor always running</strong> — Prevents product accumulation at output, addressing a real production concern</li>
+            <ul>
+              <li>Two-phase motion pattern: Factory I/O axis signals are TRUE during motion, requiring a start-detection sub-step before the completion check — prevents same-scan false transitions</li>
+              <li>Separate safety layer: FC1 handles all safety independently from the sequence. If FC2 has a bug, FC1 still forces all outputs OFF on emergency stop</li>
+              <li>TON as stopwatch: Used a TON timer with a long PT as a cycle chronometer instead of system clock reads — simpler and reliable in PLCSIM Standard</li>
+              <li>Exit conveyor always running: Prevents product accumulation at the output — a real production concern, not just a simulation detail</li>
             </ul>
-        </section>
 
-        <section class="project-section">
-            <h2>Monitored Variables</h2>
-            <ul class="project-list">
-                <li>Cycle time per piece — last, average, minimum, maximum (ms)</li>
-                <li>Piece count — cumulative production counter</li>
-                <li>Machine state — Idle / Running / Fault classification</li>
-                <li>Fault count — accumulated emergency stops and errors</li>
-                <li>Current step — real-time sequence position for diagnostics</li>
-            </ul>
-        </section>
+            <div class="future-card">
+              <div class="future-title">Phase 2 — Python Data Layer (planned)</div>
+              <div class="future-desc">Connect via python-snap7 or OPC UA → store production logs in MySQL → Streamlit dashboard with OEE, cycle time trends, and predictive degradation alerts based on moving average analysis.</div>
+            </div>
 
-        <section class="project-section">
-            <h2>Results</h2>
-            <ul class="project-list">
-                <li>Fully functional Pick & Place cycle running autonomously</li>
-                <li>Real-time cycle time measurement with statistical analysis</li>
-                <li>Clean, modular PLC code ready for industrial adaptation</li>
-                <li>Foundation for predictive maintenance via cycle time trend analysis</li>
-            </ul>
-        </section>
+          </div>
 
-        <div class="project-stats">
-            <div class="stat">
-                <span class="stat-number">10</span>
-                <span class="stat-label">Sequence steps</span>
+          <div class="sidebar">
+            <div class="highlight-box">
+              <div class="highlight-num">3</div>
+              <div class="highlight-label">Program functions (FC + DB)</div>
             </div>
-            <div class="stat">
-                <span class="stat-number">3</span>
-                <span class="stat-label">Function blocks</span>
+            <div class="highlight-box">
+              <div class="highlight-num">10</div>
+              <div class="highlight-label">Sequence steps with sub-steps</div>
             </div>
-            <div class="stat">
-                <span class="stat-number">15</span>
-                <span class="stat-label">I/O signals</span>
+            <div class="sidebar-card">
+              <div class="sidebar-title">Tech Stack</div>
+              <div class="tags">
+                <span class="tag tag-amber">TIA Portal V17</span>
+                <span class="tag tag-amber">Siemens S7-1500</span>
+                <span class="tag tag-amber">PLCSIM Standard</span>
+                <span class="tag">Factory I/O</span>
+                <span class="tag">SCL</span>
+                <span class="tag">Ladder (LAD)</span>
+              </div>
             </div>
-            <div class="stat">
-                <span class="stat-number">5</span>
-                <span class="stat-label">KPIs tracked</span>
+            <div class="sidebar-card">
+              <div class="sidebar-title">Disciplines</div>
+              <div class="tags">
+                <span class="tag">PLC Programming</span>
+                <span class="tag">State Machine Design</span>
+                <span class="tag">Safety Logic</span>
+                <span class="tag">Production Monitoring</span>
+                <span class="tag">Industrial Simulation</span>
+              </div>
             </div>
+            <div class="sidebar-card">
+              <div class="sidebar-title">GitHub</div>
+              <a href="https://github.com/andersonuz" target="_blank" style="display:flex;align-items:center;gap:8px;text-decoration:none;margin-top:4px">
+                <span style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;color:var(--blue-eng);letter-spacing:0.5px">→ View on GitHub</span>
+              </a>
+            </div>
+          </div>
         </div>
+      </div>
+    </section>
+  </div>
 
-        <div class="project-tech">
-            <span class="tech-label">Tech Stack</span>
-            <div class="tech-tags">
-                <span class="tech-tag">TIA Portal V17</span>
-                <span class="tech-tag">SCL</span>
-                <span class="tech-tag">Ladder</span>
-                <span class="tech-tag">PLCSIM</span>
-                <span class="tech-tag">S7-1500</span>
-                <span class="tech-tag">Factory I/O</span>
-            </div>
-        </div>
-
-        <div class="project-tech">
-            <span class="tech-label">Monitored KPIs</span>
-            <div class="tech-tags">
-                <span class="tech-tag">Cycle Time</span>
-                <span class="tech-tag">Piece Count</span>
-                <span class="tech-tag">Machine State</span>
-                <span class="tech-tag">Fault Count</span>
-                <span class="tech-tag">Uptime</span>
-            </div>
-        </div>
-
-        <div class="project-tech">
-            <span class="tech-label">Phase 2 (Planned)</span>
-            <div class="tech-tags">
-                <span class="tech-tag">Python</span>
-                <span class="tech-tag">snap7 / OPC UA</span>
-                <span class="tech-tag">MySQL</span>
-                <span class="tech-tag">Streamlit Dashboard</span>
-            </div>
-        </div>
-
-        <div class="project-links">
-            <span class="tech-label">Open Source</span>
-            <a href="https://github.com/andersonuz/pick-place-plc-monitoring" class="project-link">→ View on GitHub</a>
-        </div>
-
-    </main>
-
-    <footer class="footer">
-        Anderson Uceta · <a href="https://github.com/andersonuz">GitHub</a> · <a href="https://www.linkedin.com/in/anderson-joiada-uceta-b%C3%A1ez-691041145/">LinkedIn</a> · Santo Domingo, DR
-    </footer>
+  <footer>
+    <p>Anderson Uceta · <a href="https://github.com/andersonuz" target="_blank">GitHub</a> · <a href="https://www.linkedin.com/in/anderson-joiada-uceta-b%C3%A1ez-691041145/" target="_blank">LinkedIn</a> · Santo Domingo, DR</p>
+  </footer>
+  <script>function toggleNav(){document.getElementById('navLinks').classList.toggle('open');}</script>
 </body>
 </html>
