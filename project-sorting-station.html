@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sorting Station · Anderson Uceta</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .page-hero { background: var(--navy); padding: 3.5rem 0 2.5rem; position: relative; overflow: hidden; }
+    .page-hero::before { content:''; position:absolute; inset:0; background-image:linear-gradient(#ffffff05 1px,transparent 1px),linear-gradient(90deg,#ffffff05 1px,transparent 1px); background-size:30px 30px; }
+    .accent-bar { position:absolute; left:0; top:0; bottom:0; width:4px; background:var(--amber); }
+    .page-hero-inner { position:relative; z-index:1; }
+    .content-grid { display: grid; grid-template-columns: 1fr 280px; gap: 3rem; align-items: start; }
+    .sidebar { position: sticky; top: calc(var(--nav-h) + 2rem); }
+
+    .fc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 1rem 0; }
+    .fc-card { background: var(--bg-card); border: 1px solid var(--border); border-top: 3px solid var(--amber); border-radius: 0 0 4px 4px; padding: 0.9rem 1rem; }
+    .fc-card.blue { border-top-color: var(--blue-eng); }
+    .fc-name { font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 3px; }
+    .fc-lang { font-family: 'Barlow Condensed', sans-serif; font-size: 10px; font-weight: 600; color: var(--amber); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; }
+    .fc-card.blue .fc-lang { color: var(--blue-eng); }
+    .fc-desc { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+
+    .flow-steps { display: flex; flex-direction: column; gap: 6px; margin: 1rem 0; }
+    .flow-step { display: flex; align-items: flex-start; gap: 12px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 4px; padding: 10px 14px; }
+    .flow-num { font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 700; color: #fff; background: var(--amber); border-radius: 2px; padding: 1px 8px; flex-shrink: 0; line-height: 1.6; }
+    .flow-text { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+    .flow-text strong { color: var(--navy); font-weight: 600; }
+
+    .db-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin: 1rem 0; }
+    .db-item { background: var(--bg-card); border: 1px solid var(--border); border-radius: 2px; padding: 6px 10px; }
+    .db-var { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; color: var(--navy); }
+    .db-type { font-family: 'Barlow Condensed', sans-serif; font-size: 9px; color: var(--amber); font-weight: 600; letter-spacing: 0.5px; }
+    .db-desc { font-size: 10px; color: var(--text-muted); }
+
+    .lessons-list { display: flex; flex-direction: column; gap: 8px; margin: 1rem 0; }
+    .lesson-item { background: var(--bg-card); border: 1px solid var(--border); border-left: 3px solid var(--amber); border-radius: 0 4px 4px 0; padding: 10px 14px; }
+    .lesson-title { font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 700; color: var(--navy); letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 4px; }
+    .lesson-desc { font-size: 12px; color: var(--text-muted); line-height: 1.6; }
+
+    .future-card { background: var(--blue-light); border: 1px solid #b5d4f4; border-left: 3px solid var(--blue-eng); border-radius: 0 4px 4px 0; padding: 1rem 1.2rem; margin-top: 1rem; }
+    .future-title { font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 700; color: var(--blue-eng); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; }
+    .future-desc { font-size: 13px; color: #0c447c; line-height: 1.6; }
+
+    @media (max-width: 768px) { .content-grid { grid-template-columns: 1fr; } .sidebar { position: static; } .fc-grid { grid-template-columns: 1fr; } .gallery img:first-child { aspect-ratio: 16/9; } }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="index.html" class="nav-logo">ANDERSON <span>UCETA</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="projects.html" class="active">Projects</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-toggle" onclick="toggleNav()"><span></span><span></span><span></span></div>
+  </nav>
+
+  <div class="page">
+    <section class="page-hero">
+      <div class="accent-bar"></div>
+      <div class="container page-hero-inner">
+        <a class="back-link" href="projects.html" style="color:var(--steel)">← Back to projects</a>
+        <div class="proj-header" style="border-bottom-color:var(--navy-dim)">
+          <div class="proj-category" style="color:var(--amber)"><div class="cat-bar"></div>Industrial · PLC Programming · Machine Vision</div>
+          <h1 class="proj-title" style="color:#fff">Sorting Station — Vision-Based Classification System</h1>
+          <p class="proj-subtitle" style="color:var(--steel)">Vision-based sorting system that classifies plastic parts by type in real time, built from scratch using TIA Portal V17, PLCSIM (S7-1500), and Factory I/O. Reactive classification logic, edge detection, and conveyor flow control — all in SCL.</p>
+          <div class="meta-row" style="border-top-color:var(--navy-dim)">
+            <div><div class="meta-label" style="color:var(--steel-dark)">Context</div><div class="meta-value" style="color:var(--steel)">Personal Project</div></div>
+            <div><div class="meta-label" style="color:var(--steel-dark)">Year</div><div class="meta-value" style="color:var(--steel)">2025</div></div>
+            <div><div class="meta-label" style="color:var(--steel-dark)">Category</div><div class="meta-value" style="color:var(--steel)">Industrial Automation · PLC · Machine Vision</div></div>
+            <div><div class="meta-label" style="color:var(--steel-dark)">Role</div><div class="meta-value" style="color:var(--steel)">Full project — design, programming, commissioning</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="light-section">
+      <div class="container">
+        <div class="gallery">
+          <img src="assets/projects/sorting-station/img1.png" alt="Factory I/O sorting scene — vision sensor and diverters">
+          <img src="assets/projects/sorting-station/img2.png" alt="TIA Portal program blocks">
+          <img src="assets/projects/sorting-station/img3.png" alt="Watch table — live DB1 values during run">
+          <img src="assets/projects/sorting-station/img4.png" alt="FC2 — SCL classification logic">
+        </div>
+
+        <div class="content-grid">
+          <div class="prose">
+
+            <h2>The Problem</h2>
+            <p>In manufacturing lines that produce multiple plastic part types — bases, lids, bodies — parts need to be sorted automatically for downstream assembly or packaging. Manual sorting is slow, error-prone, and doesn't scale. The challenge in PLC logic is handling detection timing, conveyor coordination, and classification without mixing up parts or causing collisions.</p>
+
+            <h2>The Solution</h2>
+            <p>A complete PLC program that reads a vision sensor, identifies the part type, activates the correct sorting diverter, and manages conveyor flow to prevent part collision — all while tracking production counts per part type in real time.</p>
+
+            <h2>How It Works</h2>
+            <div class="flow-steps">
+              <div class="flow-step"><div class="flow-num">1</div><div class="flow-text"><strong>Entry conveyor</strong> feeds parts toward the vision sensor</div></div>
+              <div class="flow-step"><div class="flow-num">2</div><div class="flow-text"><strong>Vision sensor</strong> reads the part and returns an integer ID — 1 = base, 2 = lid, 3 = body</div></div>
+              <div class="flow-step"><div class="flow-num">3</div><div class="flow-text"><strong>Edge detection</strong> captures the part type on the rising edge (0 → value) — one detection per part</div></div>
+              <div class="flow-step"><div class="flow-num">4</div><div class="flow-text"><strong>Entry conveyor stops</strong> once the detected part clears the sensor — prevents the next part from arriving during sorting</div></div>
+              <div class="flow-step"><div class="flow-num">5</div><div class="flow-text"><strong>Sorter activates</strong> — the corresponding diverter turns to route the part to its designated ramp</div></div>
+              <div class="flow-step"><div class="flow-num">6</div><div class="flow-text"><strong>At_Exit sensor</strong> confirms the part entered the ramp (rising edge detection)</div></div>
+              <div class="flow-step"><div class="flow-num">7</div><div class="flow-text"><strong>Sorter deactivates</strong>, entry conveyor restarts — system ready for the next part</div></div>
+            </div>
+
+            <h2>Program Structure</h2>
+            <div class="fc-grid">
+              <div class="fc-card">
+                <div class="fc-name">FC1 — Control</div>
+                <div class="fc-lang">Ladder (LAD)</div>
+                <div class="fc-desc">Start/Stop latching, Emergency Stop, fault detection with edge detection, reset verification, forced output shutdown, indicator lights.</div>
+              </div>
+              <div class="fc-card">
+                <div class="fc-name">FC2 — Classification</div>
+                <div class="fc-lang">SCL</div>
+                <div class="fc-desc">Core sorting logic — DINT-to-INT sensor conversion, edge detection, conveyor flow control, diverter activation, exit confirmation, per-type counting.</div>
+              </div>
+              <div class="fc-card blue">
+                <div class="fc-name">FC3 — Monitoring</div>
+                <div class="fc-lang blue" style="color:var(--blue-eng)">SCL</div>
+                <div class="fc-desc">Production analytics — machine state tracking, parts per minute, distribution percentages by part type.</div>
+              </div>
+            </div>
+
+            <h2>DB1 — Sorting Data</h2>
+            <div class="db-grid">
+              <div class="db-item"><div class="db-var">visionActive <span class="db-type">BOOL</span></div><div class="db-desc">Sensor currently seeing a part</div></div>
+              <div class="db-item"><div class="db-var">SortingActive <span class="db-type">BOOL</span></div><div class="db-desc">Classification in progress</div></div>
+              <div class="db-item"><div class="db-var">ActiveSorter <span class="db-type">INT</span></div><div class="db-desc">Which diverter is active (1–3)</div></div>
+              <div class="db-item"><div class="db-var">LastColorRead <span class="db-type">INT</span></div><div class="db-desc">Last part type detected</div></div>
+              <div class="db-item"><div class="db-var">Count_Color1 <span class="db-type">INT</span></div><div class="db-desc">Parts sorted to ramp 1 (base)</div></div>
+              <div class="db-item"><div class="db-var">Count_Color2 <span class="db-type">INT</span></div><div class="db-desc">Parts sorted to ramp 2 (lid)</div></div>
+              <div class="db-item"><div class="db-var">Count_Color3 <span class="db-type">INT</span></div><div class="db-desc">Parts sorted to ramp 3 (body)</div></div>
+              <div class="db-item"><div class="db-var">Count_Total <span class="db-type">INT</span></div><div class="db-desc">Total parts processed</div></div>
+            </div>
+
+            <h2>Key Technical Decisions</h2>
+            <ul>
+              <li>DINT vision sensor — Factory I/O outputs a 32-bit DINT requiring explicit DINT_TO_INT conversion. Implicit conversion caused runtime warnings and unpredictable behavior</li>
+              <li>Entry conveyor as flow control — instead of a mechanical stop blade, the entry conveyor stops after the part clears the sensor. Key logic: Entry_Conveyor := NOT SortingActive OR visionActive</li>
+              <li>Edge detection on At_Exit — the exit sensor stays TRUE while a part is on it. Without edge detection, SortingActive resets every scan. AtExitPrev flag ensures single-trigger</li>
+              <li>Separate safety layer — FC1 handles all safety independently from FC2. Emergency stop forces all outputs OFF regardless of classification state</li>
+            </ul>
+
+            <h2>Lessons Learned</h2>
+            <div class="lessons-list">
+              <div class="lesson-item">
+                <div class="lesson-title">Type mismatches crash PLCs</div>
+                <div class="lesson-desc">A DINT sensor value written to an INT variable without conversion caused repeated PLC faults. Always match types explicitly in Siemens SCL — implicit conversion is not safe.</div>
+              </div>
+              <div class="lesson-item">
+                <div class="lesson-title">Array bounds matter</div>
+                <div class="lesson-desc">An array declared as [0..1] instead of [0..9] caused runtime crashes when accessing index 2+. PLCSIM Standard stops on out-of-range access with no descriptive error.</div>
+              </div>
+              <div class="lesson-item">
+                <div class="lesson-title">Conveyor flow beats delay timers</div>
+                <div class="lesson-desc">The gap between detection and physical arrival at the sorter is the hardest problem. Controlling conveyor flow (stop/start) is more reliable and scalable than trying to engineer precise time delays.</div>
+              </div>
+              <div class="lesson-item">
+                <div class="lesson-title">Sensors can be always-active</div>
+                <div class="lesson-desc">Assuming a sensor is normally FALSE is dangerous. At_Exit was TRUE by default in Factory I/O, causing immediate classification reset on startup. Edge detection solved it completely.</div>
+              </div>
+            </div>
+
+            <div class="future-card">
+              <div class="future-title">Future improvements</div>
+              <div class="future-desc">FIFO queue for high-speed lines · Variable speed conveyor control · Reject handling for unclassified parts · Python dashboard via snap7/OPC UA with classification rates and throughput metrics · Multi-attribute sorting by type and sub-type.</div>
+            </div>
+
+          </div>
+
+          <div class="sidebar">
+            <div class="highlight-box">
+              <div class="highlight-num">3</div>
+              <div class="highlight-label">Part types classified in real time</div>
+            </div>
+            <div class="highlight-box">
+              <div class="highlight-num">2×</div>
+              <div class="highlight-label">Edge detection (sensor + exit)</div>
+            </div>
+            <div class="sidebar-card">
+              <div class="sidebar-title">Tech Stack</div>
+              <div class="tags">
+                <span class="tag tag-amber">TIA Portal V17</span>
+                <span class="tag tag-amber">Siemens S7-1500</span>
+                <span class="tag tag-amber">PLCSIM Standard</span>
+                <span class="tag">Factory I/O</span>
+                <span class="tag">SCL</span>
+                <span class="tag">Ladder (LAD)</span>
+                <span class="tag">Vision Sensor (DINT)</span>
+              </div>
+            </div>
+            <div class="sidebar-card">
+              <div class="sidebar-title">Disciplines</div>
+              <div class="tags">
+                <span class="tag">PLC Programming</span>
+                <span class="tag">Machine Vision</span>
+                <span class="tag">Safety Logic</span>
+                <span class="tag">Reactive Control</span>
+                <span class="tag">Industrial Simulation</span>
+                <span class="tag">Edge Detection</span>
+              </div>
+            </div>
+            <div class="sidebar-card">
+              <div class="sidebar-title">GitHub</div>
+              <a href="https://github.com/andersonuz" target="_blank" style="display:flex;align-items:center;gap:8px;text-decoration:none;margin-top:4px">
+                <span style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;color:var(--blue-eng);letter-spacing:0.5px">→ View on GitHub</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <p>Anderson Uceta · <a href="https://github.com/andersonuz" target="_blank">GitHub</a> · <a href="https://www.linkedin.com/in/anderson-joiada-uceta-b%C3%A1ez-691041145/" target="_blank">LinkedIn</a> · Santo Domingo, DR</p>
+  </footer>
+  <script>function toggleNav(){document.getElementById('navLinks').classList.toggle('open');}</script>
+</body>
+</html>
